@@ -2,7 +2,7 @@ import Foundation
 
 @objc public class BlueSTSDKManager : NSObject{
     private static let RETRAY_START_SCANNING_DELAY = TimeInterval(0.5)
-    public static let DEFAULT_ADVERTISE_FILTER:[BlueSTSDKAdvertiseFilter] = [BlueSTSDKAdvertiseParser()];
+    public static let DEFAULT_ADVERTISE_FILTER:[XTIAdvertiseFilter] = [XTIAdvertiseParser()];
     
     @objc public static let sharedInstance = BlueSTSDKManager()
     /**
@@ -31,7 +31,7 @@ import Foundation
     private let mNotificationQueue = DispatchQueue(label: "BlueSTSDKMenager",qos: .background, attributes: .concurrent)
     private var mNodeFeatures:[UInt8:[NSNumber:BlueSTSDKFeature.Type]] = [:]
     private var mCBCentralManager:CBCentralManager!
-    private var mAdvertiseFilters:[BlueSTSDKAdvertiseFilter]=BlueSTSDKManager.DEFAULT_ADVERTISE_FILTER
+    private var mAdvertiseFilters:[XTIAdvertiseFilter]=BlueSTSDKManager.DEFAULT_ADVERTISE_FILTER
     
     private override init() {
         super.init()
@@ -55,7 +55,7 @@ import Foundation
      *
      *  @param timeoutMs milliseconds to wait before stop the scanning
      */
-    @objc public func discoveryStart(_ timeoutMs:Int, advertiseFilters: [BlueSTSDKAdvertiseFilter] ){
+    @objc public func discoveryStart(_ timeoutMs:Int, advertiseFilters: [XTIAdvertiseFilter] ){
         guard mCBCentralManager.state == .poweredOn  && isDiscovering == false else{
             mNotificationQueue.asyncAfter(deadline: .now()+BlueSTSDKManager.RETRAY_START_SCANNING_DELAY){
                 self.discoveryStart(timeoutMs,advertiseFilters: advertiseFilters)

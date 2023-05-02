@@ -37,7 +37,7 @@
 
 @protocol BlueSTSDKNodeBleConnectionParamDelegate;
 @protocol BlueSTSDKNodeStateDelegate;
-@protocol BleAdvertiseInfo;
+@protocol XTIAdvertiseInfo;
 
 typedef uint32_t featureMask_t;
 
@@ -135,6 +135,10 @@ typedef NS_ENUM(NSInteger, BlueSTSDKNodeType){
  */
 @property (assign, nonatomic,readonly) uint8_t typeId;
 
+@property (retain, readonly,nonnull) NSString *snType;
+@property (retain, readonly,nonnull) NSString *serialNumber;
+
+
 /**
  *  node name, is not guaranteed that this string is unique
  */
@@ -178,7 +182,7 @@ typedef NS_ENUM(NSInteger, BlueSTSDKNodeType){
 @property (readonly) BOOL isSleeping;
 @property (readonly) BOOL hasExtension;
 
-@property (readonly,nonnull) id<BleAdvertiseInfo> advertiseInfo;
+@property (readonly,nonnull) id<XTIAdvertiseInfo> advertiseInfo;
 
 @property (readonly) uint32_t advertiseBitMask;
 

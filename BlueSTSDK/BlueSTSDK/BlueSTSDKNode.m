@@ -37,6 +37,7 @@
 #import "Util/BlueSTSDKCharacteristic.h"
 #import "Util/NSData+NumberConversion.h"
 #import "Util/UnwrapTimeStamp.h"
+@protocol XTIBlueSTSDKAdvertiseInfo;
 
 #define RETRAY_ENABLE_NOTIFICATION_DELAY 1.0f
 #define TAG_NAME_CHAR_NUM 6
@@ -160,10 +161,12 @@ static dispatch_queue_t sNotificationQueue;
     return self;
 }
 
--(void)updateAdvertiseInfo:(id<BleAdvertiseInfo> _Nonnull)newInfo{
+-(void)updateAdvertiseInfo:(id<XTIAdvertiseInfo> _Nonnull)newInfo{
     _advertiseInfo = newInfo;
     _type = _advertiseInfo.boardType;
     _typeId = _advertiseInfo.deviceId;
+    _snType = _advertiseInfo.snType;
+    _serialNumber = _advertiseInfo.serialNumber;
     _name = _advertiseInfo.name;
     _address = _advertiseInfo.address;
     _protocolVersion = _advertiseInfo.protocolVersion;
@@ -172,7 +175,7 @@ static dispatch_queue_t sNotificationQueue;
     _advertiseBitMask = _advertiseInfo.featureMap;
 }
 
--(instancetype)init:(CBPeripheral *)peripheral rssi:(NSNumber*)rssi advertiseInfo:(id<BleAdvertiseInfo> _Nonnull)advertiseInfo{
+-(instancetype)init:(CBPeripheral *)peripheral rssi:(NSNumber*)rssi advertiseInfo:(id<XTIAdvertiseInfo> _Nonnull)advertiseInfo{
     self = [self init];
     mPeripheral=peripheral;
     mPeripheral.delegate=self;
